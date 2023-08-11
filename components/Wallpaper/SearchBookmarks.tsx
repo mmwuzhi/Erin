@@ -92,6 +92,11 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
       id: generateId()
     })
   }
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSubmit()
+    }
+  }
   const [form, setForm] = useState({
     title: "",
     url: "",
@@ -113,6 +118,7 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
               title: _title
             })
           }}
+          onKeyDown={handleEnter}
         />
         <input
           className="p-2 focus-visible:outline-none border-b border-b-transparent focus:border-blue-200"
@@ -126,6 +132,7 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
               url: _url
             })
           }}
+          onKeyDown={handleEnter}
         />
         <div className="flex justify-end mt-6">
           <button

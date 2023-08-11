@@ -37,8 +37,7 @@ const Bookmark: FC<IBookmarkProps> = ({ data, setIsDrag }) => {
       onDragEnd={onDragEnd}
       data-url={data.url}
       href={data.url}
-      className="hover-bookmark flex justify-center items-center p-1 bg-gray-50 rounded-md relative group"
-    >
+      className="hover-bookmark flex justify-center items-center p-1 bg-gray-50 rounded-md relative group">
       <BookmarkFavicon url={data.url} size={24} />
       <span className="absolute bg-black bg-opacity-25 p-1 opacity-0 group-hover:opacity-100 max-w-[128px] truncate text-[12px] rounded-sm -top-[32px] text-white z-[-1]">
         {data.title}
@@ -118,6 +117,16 @@ export default function () {
     })()
   }, [])
 
+  useEffect(() => {
+    if (showSearch) {
+      const onClickDoc = (e: KeyboardEvent) =>
+        e.key === "Escape" && setShowSearch(false)
+
+      document.addEventListener("keyup", onClickDoc)
+      return () => document.removeEventListener("keyup", onClickDoc)
+    }
+  }, [showSearch])
+
   return (
     <>
       <div
@@ -139,9 +148,7 @@ export default function () {
           <AddCustomBookmark onClick={() => setShowSearch(!showSearch)} />
         )}
       </div>
-      {showSearch && (
-        <SearchBookmarks onCloseBox={() => setShowSearch(false)} />
-      )}
+      {showSearch && <SearchBookmarks />}
     </>
   )
 }

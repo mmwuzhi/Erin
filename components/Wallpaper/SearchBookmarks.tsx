@@ -97,6 +97,7 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
     url: "",
     id: generateId()
   })
+
   return (
     <div>
       <div className="flex flex-col gap-2">
@@ -143,7 +144,7 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
   )
 }
 
-export default function ({ onCloseBox }: { onCloseBox: () => void }) {
+export default function () {
   const [showSearch, setShowSearch] = useState(true)
   const [query, setQuery] = useState("")
   const [searchItems, setSearchItems] = useState(
@@ -172,10 +173,6 @@ export default function ({ onCloseBox }: { onCloseBox: () => void }) {
           type="text"
           className="flex-grow p-3 focus-visible:outline-none text-[16px] leading-[20px]"
           autoFocus
-          onKeyUp={(e) => {
-            // handler click esc
-            if (e.keyCode === 27) onCloseBox()
-          }}
           placeholder="搜索..."
           value={query}
           onChange={(e) => {
@@ -184,7 +181,7 @@ export default function ({ onCloseBox }: { onCloseBox: () => void }) {
             onSearch(_query)
           }}
         />
-        <button className="p-1" onClick={(e) => setShowSearch(false)}>
+        <button className="p-1" onClick={() => setShowSearch(false)}>
           <AiOutlinePlus
             size={24}
             className="transform scale-75 opacity-30 hover:scale-100 transition-all hover:opacity-100 hover:text-purple-500"

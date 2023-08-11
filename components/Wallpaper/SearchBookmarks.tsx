@@ -1,5 +1,5 @@
 import { useAtom } from "jotai"
-import { FC, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { AiOutlineEnter, AiOutlinePlus } from "react-icons/ai"
 import { CiMap } from "react-icons/ci"
 
@@ -78,6 +78,7 @@ const SearchItemsContainer: FC<ISearchItemsProps> = ({ data }) => {
 
 const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
   const [bookmarks, setBookmarks] = useAtom(syncBookmarksStore)
+  const titleRef = useRef<HTMLInputElement>(null)
   const onSubmit = () => {
     if (form.title.trim().length === 0 || form.url.trim().length === 0) return
     if (bookmarks.some((i) => i.url === form.url)) return
@@ -91,6 +92,7 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
       url: "",
       id: generateId()
     })
+    titleRef.current?.focus()
   }
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -103,10 +105,15 @@ const AddCustomBookmarkForm: FC<{ onClose: () => void }> = ({ onClose }) => {
     id: generateId()
   })
 
+  useEffect(()=> {
+    titleRef.current?.focus()
+  },[])
+
   return (
     <div>
       <div className="flex flex-col gap-2">
         <input
+          ref={titleRef}
           className="p-2 focus-visible:outline-none border-b border-b-transparent focus:border-blue-200"
           type="text"
           placeholder="标题"

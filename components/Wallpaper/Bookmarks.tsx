@@ -3,7 +3,7 @@ import { DragEvent, FC, useEffect, useState } from "react"
 import { FcFullTrash, FcPlus } from "react-icons/fc"
 
 import { asideSettingConfigStore, syncBookmarksStore } from "~store"
-import { onStopPaClickPropagation, openNewTab } from "~utils/browser"
+import { onStopPaClickPropagation } from "~utils/browser"
 import { getSyncBookmarks, removeSyncBookmarks } from "~utils/storage"
 
 import BookmarkFavicon from "./BookmarkFavicon"
@@ -30,19 +30,20 @@ const Bookmark: FC<IBookmarkProps> = ({ data, setIsDrag }) => {
   }
 
   return (
-    <div
+    <a
       data-bookmarks
       draggable
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       data-url={data.url}
+      href={data.url}
       className="hover-bookmark flex justify-center items-center p-1 bg-gray-50 rounded-md relative group"
-      onClick={() => openNewTab(data.url)}>
+    >
       <BookmarkFavicon url={data.url} size={24} />
       <span className="absolute bg-black bg-opacity-25 p-1 opacity-0 group-hover:opacity-100 max-w-[128px] truncate text-[12px] rounded-sm -top-[32px] text-white z-[-1]">
         {data.title}
       </span>
-    </div>
+    </a>
   )
 }
 const AddCustomBookmark: FC<IAddCustomBookmarkProps> = ({ onClick }) => {
@@ -107,29 +108,18 @@ export default function () {
     )
   }
   useEffect(() => {
-    const onClickDoc = () => {
-      setShowSearch(false)
-    }
-
-    const init = async () => {
+    ;(async () => {
       try {
         const syncLocalResult = await getSyncBookmarks()
         setSyncBookmarks(syncLocalResult)
       } catch (error) {
         console.log("get tree failed...", error)
-      } finally {
-        document.addEventListener("click", onClickDoc)
       }
-    }
-    init()
-
-    return () => {
-      document.removeEventListener("click", onClickDoc)
-    }
+    })()
   }, [])
 
   return (
-    <div onClick={onStopPaClickPropagation}>
+    <>
       <div
         onContextMenu={onStopPaClickPropagation}
         style={{
@@ -152,6 +142,6 @@ export default function () {
       {showSearch && (
         <SearchBookmarks onCloseBox={() => setShowSearch(false)} />
       )}
-    </div>
+    </>
   )
 }

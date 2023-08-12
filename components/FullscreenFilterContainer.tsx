@@ -13,7 +13,7 @@ export default function ({
 }) {
   return (
     <div
-      className={clsx("fixed inset-0 w-screen h-screen z-50", classnames)}
+      className={clsx("fixed inset-0 w-screen h-screen", classnames)}
       style={{zIndex: EZIndexRecord.fullscreenLayout}}
       onClick={() => {
         onClickOutside?.()

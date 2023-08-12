@@ -2,6 +2,7 @@ import { useAtom } from "jotai"
 import { DragEvent, FC, useEffect, useState } from "react"
 import { FcFullTrash, FcPlus } from "react-icons/fc"
 
+import FullscreenFilterContainer from "~components/FullscreenFilterContainer"
 import { asideSettingConfigStore, syncBookmarksStore } from "~store"
 import { onStopPaClickPropagation } from "~utils/browser"
 import { getSyncBookmarks, removeSyncBookmarks } from "~utils/storage"
@@ -148,6 +149,13 @@ export default function () {
           <AddCustomBookmark onClick={() => setShowSearch(!showSearch)} />
         )}
       </div>
+      {showSearch && (
+        <FullscreenFilterContainer
+          zIndex={1}
+          enableContextMenu
+          onClickOutside={() => setShowSearch(false)}
+        />
+      )}
       {showSearch && <SearchBookmarks />}
     </>
   )

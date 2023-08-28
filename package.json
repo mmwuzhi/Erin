@@ -1,7 +1,7 @@
 {
   "name": "Erin",
   "displayName": "Erin",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Define your browser newtab page",
   "author": "Developer27149",
   "scripts": {
@@ -50,7 +50,6 @@
       "downloads",
       "unlimitedStorage",
       "tabs",
-      "windows",
       "bookmarks",
       "favicon",
       "contextMenus"
@@ -59,6 +58,19 @@
       "https://cn.bing.com/*",
       "http://api.bing.com/*",
       "https://api.bing.com/*"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "_favicon/*"
+        ],
+        "matches": [
+          "<all_urls>"
+        ],
+        "extension_ids": [
+          "*"
+        ]
+      }
     ]
   }
 }
